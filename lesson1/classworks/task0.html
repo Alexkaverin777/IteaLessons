@@ -23,6 +23,19 @@
 
 
       var Table = ['Hey!', 'this', 'is', 'js', 'advanced', 'course'];
+      console.log('Combined log:', Table);
+      console.table(Table);
+      console.error('Oops! Something gonna wrong!');
+      console.warn("Be careful in the dark! It's can be dangerous");
+      console.log("%cTest!", "font-size:30px; color: green");
+
+      console.group();
+      console.log('1');
+      console.groupEnd();
+      console.group();
+      console.log('2');
+      console.groupEnd();
+
     </script>
 </body>
 </html>

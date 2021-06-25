@@ -78,45 +78,42 @@
       */
 
       const containers = document.querySelectorAll(".roadMap__container");
-      
+
       let count = 0;
 
       containers.forEach((item) => {
         item.addEventListener("click", (e) => {
           const target = e.target;
 
-
-          if (target.dataset.direction === "<" || target.dataset.direction === ">") {
+          if (
+            target.dataset.direction === "<" ||
+            target.dataset.direction === ">"
+          ) {
             const roadMapPoint = item.querySelectorAll(".roadMapPoint");
-            const indexActivAlem = [...roadMapPoint].findIndex(item => item.classList.contains('ball'));
+            const btnPrev = item.querySelector(
+              '.navButton[data-direction="<"]'
+            );
+            const btnNext = item.querySelector(
+              '.navButton[data-direction=">"]'
+            );
+            const indexActivAlem = [...roadMapPoint].findIndex((item) =>
+              item.classList.contains("ball")
+            );
             const coutElem = roadMapPoint.length - 1;
-            
-
-            console.log(indexActivAlem);
 
             count = indexActivAlem;
 
-
-            
-
-            roadMapPoint.forEach((ball) => {
-              ball.classList.remove("ball");
-            });
+            roadMapPoint.forEach((ball) => ball.classList.remove("ball"));
 
             if (target.dataset.direction === "<") count--;
             if (target.dataset.direction === ">") count++;
 
-            if (count >= coutElem) {
-              console.log('disabled');
-              target.disabled = true;
-            }
-            if (count === 0) {
-              console.log('disabled 0');
-              target.disabled = true;
-            }
+            if (count >= coutElem) target.disabled = true;
+            if (count === 0) target.disabled = true;
 
+            if (count > 0) btnPrev.disabled = false;
+            if (count < coutElem) btnNext.disabled = false;
 
-            console.log(count);
             roadMapPoint[count].classList.add("ball");
           }
         });

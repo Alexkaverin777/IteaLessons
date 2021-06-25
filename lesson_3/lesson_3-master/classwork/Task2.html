@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Task 2</title>
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="wrap" id="wrap">
+      <header>
+        <button id="HouseButton">House</button>
+        <button id="TreeButton">Tree</button>
+        <button id="PlaneButton">Plane</button>
+      </header>
+      <div id="chooseYourBlock">
+      </div>
+      <div id="result">
+
+      </div>
+    </div>
+    <script>
+      /*
+        Задание:
+
+        По нажатию на кнопку, в блок с id chooseYourBlock выводить иконку с нажатой кнопки:
+
+        House:  https://image.flaticon.com/icons/svg/149/149064.svg
+        Tree: https://image.flaticon.com/icons/svg/620/620705.svg
+        Plane: https://image.flaticon.com/icons/svg/579/579268.svg
+
+        Под иконкой расположить еще одну кнопку, по нажатию на которую из соответствующего массива
+        подтягивается случайная картинка с изображением в блок result.
+        Предыдущий результат очищается.
+ */
+      // const houseArray = [
+      //   "https://static.pexels.com/photos/106399/pexels-photo-106399.jpeg",
+      //   "https://i.pinimg.com/736x/7f/be/50/7fbe50ec634c65709d7fe6ac267c4e6f--large-garage-plans-house-plans-large-family.jpg",
+      //   "https://i.ytimg.com/vi/Xx6t0gmQ_Tw/maxresdefault.jpg"
+      // ];
+
+      // const planeArray = [
+      //   "http://www.x-plane.com/wp-content/uploads/2014/08/B777-200ER.png",
+      //   "https://media.cntraveler.com/photos/57067c1e9adc6caf5afe3f4c/master/pass/plane-landing-cr-getty-sb10062851ai-001.jpg",
+      //   "https://media.wired.com/photos/59323264a31264584499367f/master/w_1024,c_limit/diesel-plane-inline.jpg"
+      // ];
+
+      // const treeArray = [
+      //   "https://static.pexels.com/photos/56875/tree-dawn-nature-bucovina-56875.jpeg",
+      //   "https://c1.staticflickr.com/8/7218/7184786016_1ddab461e8_b.jpg",
+      //   "http://www.atzmut.com/wp-content/uploads/2016/01/tree.jpg"
+      // ];
+      
+
+      const urlObjAll = {
+        house: [
+        "https://static.pexels.com/photos/106399/pexels-photo-106399.jpeg",
+        "https://i.pinimg.com/736x/7f/be/50/7fbe50ec634c65709d7fe6ac267c4e6f--large-garage-plans-house-plans-large-family.jpg",
+        "https://i.ytimg.com/vi/Xx6t0gmQ_Tw/maxresdefault.jpg"],
+        plane: [
+        "http://www.x-plane.com/wp-content/uploads/2014/08/B777-200ER.png",
+        "https://media.cntraveler.com/photos/57067c1e9adc6caf5afe3f4c/master/pass/plane-landing-cr-getty-sb10062851ai-001.jpg",
+        "https://media.wired.com/photos/59323264a31264584499367f/master/w_1024,c_limit/diesel-plane-inline.jpg"
+      ],
+        tree: [
+        "https://static.pexels.com/photos/56875/tree-dawn-nature-bucovina-56875.jpeg",
+        "https://c1.staticflickr.com/8/7218/7184786016_1ddab461e8_b.jpg",
+        "http://www.atzmut.com/wp-content/uploads/2016/01/tree.jpg"
+      ]
+      }
+
+      const iconsObj = {
+        house:  'https://image.flaticon.com/icons/svg/149/149064.svg',
+        tree: 'https://image.flaticon.com/icons/svg/620/620705.svg',
+        plane: 'https://image.flaticon.com/icons/svg/579/579268.svg'
+      }
+      
+      //vars
+      const buttons = document.querySelectorAll('button'),
+            iconBlock = document.getElementById('chooseYourBlock'),
+            resultBlock = document.getElementById('result');
+      
+      //CreacteElements
+      const creatElemImg = document.createElement('img'),
+            creatElemnButton = document.createElement('button'),
+            creatElemnDiv = document.createElement('div');
+
+      function showIcon(e){
+        const val = e.target.innerText.toLowerCase();
+        resultBlock.innerHTML = '';
+        
+        creatElemImg.src = imgIncons(iconsObj, val);
+        creatElemImg.width = 200;
+        creatElemImg.height = 200;
+
+        creatElemnButton.innerText = val+' img rondom';
+
+        creatElemnDiv.appendChild(creatElemImg);
+        creatElemnDiv.appendChild(creatElemnButton);
+
+        iconBlock.appendChild(creatElemnDiv);
+
+        creatElemnButton.addEventListener('click', () => {
+          const creatElemImg = document.createElement('img');
+          resultBlock.innerText = '';
+
+          creatElemImg.src = randomImg(urlObjAll, val);
+          creatElemImg.width = 200;
+          creatElemImg.height = 200;
+
+          resultBlock.appendChild(creatElemImg)
+          //  resultBlock.innerHTML = `<img src='${randomImg(urlObjAll, val)}' width="200px" height="200px" alt="">`;
+        });
+
+      }
+
+      /**
+     * Рондомное картинка с массива
+     * @param {arr} arr массив картинок
+     * @param {val} arr text btn
+     * @return {string} вернет URL картинку с массива 
+     */
+      const imgIncons = (arr, val) => {
+        for (let item in arr){
+          if (item === val) {
+            return arr[item]
+          }
+        }
+      }
+    
+     /**
+     * Random Img - URL
+     * @param {object} object ключ = array
+     * @return {string} вернет рондомную картинку с определенного массива
+     */
+      const randomImg = (arr, val) => {
+        for (let item in arr){
+          const randomNumber =  Math.floor(Math.random() * arr[item].length);
+
+          if (item === val) return arr[item][randomNumber]        
+        }
+      }
+     
+      buttons.forEach( btn => btn.addEventListener('click', showIcon));
+    </script>
+  </body>
+</html>

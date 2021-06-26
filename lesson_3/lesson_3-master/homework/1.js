@@ -77,8 +77,12 @@ dots.forEach( ( dot , i ) => {
 })
 
 const renderImage = n => {
-  creatElemImg.src = OurSliderImages[n];
-  boxlider.appendChild(creatElemImg)
+  creatElemImg.classList.remove('active');
+  creatElemImg.src = OurSliderImages[n]; 
+   
+  boxlider.appendChild(creatElemImg);
+
+  setTimeout(()=> creatElemImg.classList.add('active'), 50);
 }
 const nextSlider = () => {
   if (currentPosition === lengthArr) {

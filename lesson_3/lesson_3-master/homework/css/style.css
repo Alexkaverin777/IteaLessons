@@ -51,13 +51,19 @@ body{
 }
 
 .loadedImage{
-  transform: rotate(390deg);
+  transform: rotate(360deg);
   transition: 0.5s;
 }
 .dots-wraper {
   display: flex;
   justify-content: center;
 
+}
+
+#slider img.active{
+
+  transition: all 1.5s ease-in-out;
+  transform: rotate(360deg);
 }
 .dot {
   width: 10px;

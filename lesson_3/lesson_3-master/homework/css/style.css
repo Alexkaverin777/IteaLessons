@@ -59,11 +59,17 @@ body{
   justify-content: center;
 
 }
-
-#slider img.active{
-
+img {
+  border-radius: 60%;
+  object-fit: cover;
+}
+#slider img.active-right{
   transition: all 1.5s ease-in-out;
   transform: rotate(360deg);
+}
+#slider img.active-left{
+  transition: all 1.5s ease-in-out;
+  transform: rotate(-360deg);
 }
 .dot {
   width: 10px;

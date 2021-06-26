@@ -34,7 +34,7 @@ const creatElemImg = document.createElement('img');
 let currentPosition = 0;
 
 window.addEventListener('load', () => {
-  renderImage(currentPosition);
+  renderImage(currentPosition, true);
   
   prevSilde.addEventListener('click', prevSlider);
   nextSlide.addEventListener('click', nextSlider);
@@ -54,8 +54,8 @@ const creatDots = () => {
 }
 /**
  * 
- * @param {*} dots точки слайдера 
- * @param {*} i интекс активной ночки
+ * @param {Array} dots точки слайдера 
+ * @param {number} i интекс активной ночки
  */
 const activeDots = (dots, i) => {
   for(dot of dots){
@@ -75,19 +75,25 @@ dots.forEach( ( dot , i ) => {
     renderImage(i)
   })
 })
-
-const renderImage = n => {
-  creatElemImg.classList.remove('active');
+/**
+ * 
+ * @param {number} n индекс активного слайдера 
+ * @param {boolean} boolean если true тода анимация в одну сторону если false вдругую 
+ */
+const renderImage = (n, boolean) => {
+  creatElemImg.classList.remove('active-right', 'active-left');
   creatElemImg.src = OurSliderImages[n]; 
-   
   boxlider.appendChild(creatElemImg);
-
-  setTimeout(()=> creatElemImg.classList.add('active'), 50);
+  if (boolean) {
+    setTimeout(()=> creatElemImg.classList.add('active-right'), 50);
+  } else {
+    setTimeout(()=> creatElemImg.classList.add('active-left'), 50);
+  }  
 }
 const nextSlider = () => {
   if (currentPosition === lengthArr) {
     currentPosition = 0;
-    renderImage(currentPosition);
+    renderImage(currentPosition, true);
     activeDots(dots, currentPosition)
   } else {
     currentPosition++;
@@ -98,7 +104,7 @@ const nextSlider = () => {
 const prevSlider = () => {
   if (currentPosition === 0) {
     currentPosition = lengthArr;
-    renderImage(currentPosition);
+    renderImage(currentPosition, false);
     activeDots(dots, currentPosition)
     
   } else {

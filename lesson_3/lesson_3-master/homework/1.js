@@ -18,5 +18,90 @@
 
 */
 
-  var OurSliderImages = ['images/cat1.jpg', 'images/cat2.jpg', 'images/cat3.jpg', 'images/cat4.jpg', 'images/cat5.jpg', 'images/cat6.jpg', 'images/cat7.jpg', 'images/cat8.jpg'];
-  var currentPosition = 0;
+const boxlider = document.getElementById('slider'),
+      mySlider = document.querySelector('.mySlider'),
+      prevSilde = document.getElementById('PrevSilde'),
+      nextSlide = document.getElementById('NextSilde'),      
+      OurSliderImages = [
+                      'images/cat1.jpg', 'images/cat2.jpg',
+                      'images/cat3.jpg', 'images/cat4.jpg',
+                      'images/cat5.jpg', 'images/cat6.jpg',
+                      'images/cat7.jpg', 'images/cat8.jpg'
+                      ],
+        lengthArr = OurSliderImages.length - 1;
+
+const creatElemImg = document.createElement('img');
+let currentPosition = 0;
+
+window.addEventListener('load', () => {
+  renderImage(currentPosition);
+  
+  prevSilde.addEventListener('click', prevSlider);
+  nextSlide.addEventListener('click', nextSlider);
+})
+const creatDots = () => {
+  const creactDotsWrap = document.createElement('div');
+  creactDotsWrap.classList.add('dots-wraper');
+
+  for (let i = 0; i < OurSliderImages.length; i++) {
+    const divCreat = document.createElement('div');
+    divCreat.classList.add('dot')
+
+    creactDotsWrap.appendChild(divCreat)
+  }
+
+  return creactDotsWrap;
+}
+/**
+ * 
+ * @param {*} dots точки слайдера 
+ * @param {*} i интекс активной ночки
+ */
+const activeDots = (dots, i) => {
+  for(dot of dots){
+    dot.classList.remove('active');
+  }
+  dots[i].classList.add('active');
+  currentPosition = i
+}
+
+mySlider.insertAdjacentElement('beforeend', creatDots());
+const dots = document.querySelectorAll('.dot');
+activeDots(dots, currentPosition);
+
+dots.forEach( ( dot , i ) => {
+  dot.addEventListener('click', () => {
+    activeDots(dots, i)
+    renderImage(i)
+  })
+})
+
+const renderImage = n => {
+  creatElemImg.src = OurSliderImages[n];
+  boxlider.appendChild(creatElemImg)
+}
+const nextSlider = () => {
+  if (currentPosition === lengthArr) {
+    currentPosition = 0;
+    renderImage(currentPosition);
+    activeDots(dots, currentPosition)
+  } else {
+    currentPosition++;
+    renderImage(currentPosition);
+    activeDots(dots, currentPosition)
+  }
+}
+const prevSlider = () => {
+  if (currentPosition === 0) {
+    currentPosition = lengthArr;
+    renderImage(currentPosition);
+    activeDots(dots, currentPosition)
+    
+  } else {
+    currentPosition--;
+    renderImage(currentPosition);
+    activeDots(dots, currentPosition)
+    
+  }
+}
+

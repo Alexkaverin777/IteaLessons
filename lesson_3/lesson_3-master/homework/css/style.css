@@ -54,3 +54,20 @@ body{
   transform: rotate(390deg);
   transition: 0.5s;
 }
+.dots-wraper {
+  display: flex;
+  justify-content: center;
+
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid black;
+  margin-right: 5px;
+  background-color: blanchedalmond;
+}
+
+.dot.active {
+  background-color: crimson;
+}

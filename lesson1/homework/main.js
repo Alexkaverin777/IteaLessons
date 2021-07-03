@@ -40,6 +40,7 @@
       myNumber.toString(16) // fb
 
 */
+
 /**
  * Рондомное число от min до max
  * @param {number} min число от 0

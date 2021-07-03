@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Form work1</title>
+
+</head>
+
+<body>
+<select id="countries"></select>
+<div id="result"></div>
+<script>
+	/*
+      Задание:
+
+      1. Сгенерировать список стран в Select countries
+      2. При выборе страны генерировать еще один Select со списком
+        городов этой страны и вывести этот селект в блок result
+      3. При выборе города нужно случайно рандомить температуру от
+      -10 градусов до +40. Если температура
+
+        -10 до 0 то 'Солнечно' 'Легкий снегопад' 'Сильный снегопад'
+        0 до 30 то  'Солнечно' 'Дождь' 'Ветер' 'Сильный дождь'
+        30 до 40 то 'Солнечно' 'Засуха' 'Ветер'
+
+      4. Вывести сообщение на страничку
+        {Country}. В {City} {Weather} {Temperature} градусов.
+        Ukraine. В Kyiv Солнечно -10 градусов
+
+        + бонус добавить красивые картинки с погодой
+    */
+	window.addEventListener("load", function () {
+		const countries = ['Ukraine', 'Poland', 'USA'];
+		const ukraineCity = ['Kyiv', 'Lviv', 'Odesa', 'Charkiv'];
+		const polandCity = ['Warszawa', 'Poznan', 'Krakow', 'Katowice'];
+		const usaCity = ['New York', 'Los Angeles', 'Las Vegas', 'Chicago'];
+		const mySelect = document.getElementById('countries');
+		const result = document.getElementById('result');
+
+		const startOpt = new Option("Выберите страну", null, true, true);
+		      startOpt.disabled = true;
+
+		const newStartOption = new Option('Выберите город', null, true, true);
+		      newStartOption.disabled = true;
+
+		countries.forEach(country => {
+			const option = new Option(country, country, true, true);
+
+			mySelect.appendChild(option);
+		});
+
+		mySelect.appendChild(startOpt);
+
+		mySelect.addEventListener('change', (e) => {
+			const valueSelect = e.target.value;
+			thmNewSelect(valueSelect);
+
+		});
+		const thmNewSelect = valueSelect => {
+			result.innerHTML = '';
+			const newSelectCity = document.createElement('select');
+			if (valueSelect === 'Ukraine') {
+				ukraineCity.forEach(city => {
+					const creOption = new Option(city, city, true, true);
+					newSelectCity.appendChild(creOption);
+				});
+				newSelectCity.appendChild(newStartOption);
+				result.insertAdjacentElement('beforeend', newSelectCity);
+
+			} else if (valueSelect === 'Poland') {
+				polandCity.forEach(city => {
+					const creOption = new Option(city, city, true, true);
+					newSelectCity.appendChild(creOption);
+				});
+				newSelectCity.appendChild(newStartOption);
+				result.insertAdjacentElement('beforeend', newSelectCity);
+
+
+			} else if (valueSelect === 'USA') {
+				usaCity.forEach(city => {
+					const creOption = new Option(city, city, true, true);
+					newSelectCity.appendChild(creOption);
+				});
+				newSelectCity.appendChild(newStartOption);
+				result.insertAdjacentElement('beforeend', newSelectCity);
+
+			}
+			newSelectCity.addEventListener('change', (e) => {
+				const value = e.target.value;
+				randomMessageText(valueSelect, value, randomNumber(10), randomNumber(40));
+			});
+
+		};
+
+		const randomNumber = (max) => {
+			return Math.floor((Math.random() * max))
+		};
+
+		/**
+		 * Выведет на страницу сообщение о погоде
+		 * @param {string} country Страна
+		 * @param {string} city город
+		 * @param {number} min минимальное число
+		 * @param {number} max максимальное число
+		 *
+		 */
+		const randomMessageText = (country, city, min, max) => {
+			const arrWeather = ['Солнечно', 'Легкий снегопад', 'Сильный снегопад'];
+			const arrWeather2 = ['Солнечно', 'Дождь', 'Ветер', 'Сильный дождь'];
+			const arrWeather3 = ['Солнечно', 'Засуха', 'Ветер'];
+			if (max === 0) {
+				alert(`${country}. В ${city} ${ratdomWeater(arrWeather)} от -${min} до ${0} градусов`);
+				return
+			}
+			if (max <= 30) {
+				alert(`${country}. В ${city} ${ratdomWeater(arrWeather2)} +${max} градусов`);
+				return
+			}
+			if (max > 30 && max <= 40) {
+				alert(`${country}. В ${city} ${ratdomWeater(arrWeather3)} +${max} градусов`);
+				return
+			}
+		};
+
+		const ratdomWeater = (arr) => {
+			return arr[Math.floor((Math.random() * arr.length))]
+		}
+	});
+
+</script>
+</body>
+</html>

@@ -7,7 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false" style="">
+        <i class="eicon-menu-bar" aria-hidden="true" role="presentation"></i>
+        <span class="elementor-screen-only">Menu</span>
+    </div>
+
 <p>
     1.	Дано початковий масив та аргументи після нього. 
     Прибрати всі значення з масиву, які співпадають 
@@ -26,13 +30,46 @@ foo([1, 2, 3], [5, 2, 1, 4], [2, 1], [6, 7, 8]) має повернути [1, 2,
 </p>
 
     <script>
-// const filterArray = (arr, a, b) => arr.filter(i => (i !== a) && (i !== b));
+/*
+function sumAll(arr) {
+    let max = Math.max(...arr);
+    let min = Math.min(...arr);
+    let result = 0;
+    debugger
+    for (let i = min; i <= max;){
+        result += i;
+        i++
+    }
+    return result
+}
 
-// console.log(filterArray([1, 2, 3, 1, 2, 3], 2, 3));
-// console.log(filterArray([1, 2, 3, 5, 1, 2, 3], 2, 3));
-// console.log(filterArray([2, 3, 2, 3], 2, 3));
-// const generateUniqArray = (...arrs) => [].concat(...arrs).filter((v, i, a) => a.indexOf(v) === i);
-console.log(generateUniqArray([1, 2, 3], [5, 2, 1, 4], [2, 1], [6, 7, 8]))
+console.log(sumAll([10, 5]));
+*/
+
+function diffArray(arr1, arr2) {
+  let arr = [].concat(arr1,arr2)
+  let newArr = arr1.filter(n => arr2.indexOf(n) === -1)
+
+  console.log(newArr);
+  return newArr;
+
+
+}
+
+diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]);
+
+
+const elementorMenuToggle = document.querySelector('.elementor-menu-toggle');
+const body = document.querySelector('body');
+
+if (elementorMenuToggle.classList.contains('elementor-active')){
+    body.style.overflow = 'hidden';
+    console.log('elementor-active');
+}else {
+    body.style.overflow = 'auto';
+    console.log('asdasdsa');
+}
+
 
     </script>
 </body>

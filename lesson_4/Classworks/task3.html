@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Form work1</title>
+
+</head>
+<body>
+<header>
+    <input id="newToDo" class="textInput"/>
+    <input id="AddToDo" class="addButton" type="button" value="Add"/>
+</header>
+<ul id="toDoList">
+</ul>
+
+<style>
+    .done {
+        text-decoration: line-through;
+    }
+
+    .btn-remove {
+        transition: all .4s ease-in-out;
+    }
+
+    .textInput {
+        box-sizing: border-box;
+        padding: 10px 20px;
+    }
+
+    .addButton {
+        box-sizing: border-box;
+        padding: 10px 20px;
+        background: #ffcc00;
+    }
+
+    .DoneCheckbox,
+    .TodoText {
+        margin-right: 5px;
+    }
+
+    button {
+        background: red;
+        color: #fff;
+        padding: 5px 10px;
+    }
+</style>
+
+<script>
+	/*
+      Задание:
+        Создать список дел, в который можно:
+        - Добавить новый элемент
+        - Удалить элемент
+        - Задать что пункт выполнен
+
+      Шаблон элемента:
+        <li class="listItem">
+            <input type="checkbox" class="DoneCheckbox" />
+            <span class="TodoText">{add text}</span>
+            <button>Remove</button>
+        </li>
+
+    */
+	window.addEventListener("load", function () {
+		const newToDo = document.getElementById('newToDo'),
+			addToDo = document.getElementById('AddToDo'),
+			toDoList = document.getElementById('toDoList');
+
+		addToDo.addEventListener('click', () => addTodoItem(newToDo, toDoList));
+
+		const removeList = (e) => {
+			const listItem = e.target.closest('.listItem');
+			const btnRemove = e.target.closest('.btn-remove');
+			if (btnRemove) toDoList.removeChild(listItem);
+
+		};
+		toDoList.addEventListener('click', removeList);
+	});
+
+	const isChangList = e => {
+		const item = e.target.closest('.listItem');
+		const input = e.target.closest('.DoneCheckbox');
+		const btn = item.lastElementChild;
+
+		if (input.checked) {
+			item.classList.add('done');
+			btn.style.backgroundColor = 'green';
+			btn.disabled = false;
+			return true
+		}
+		item.classList.remove('done');
+		btn.style.backgroundColor = 'red';
+
+	};
+
+	const addTodoItem = (input, toDoList) => {
+		let valueTodo = input.value;
+		const li = `
+                <li class="listItem" >
+                    <input type="checkbox" class="DoneCheckbox" />
+                    <span class="TodoText">${valueTodo}</span>
+                    <button class="btn-remove" disabled>Remove</button>
+                 </li>`;
+
+		if (valueTodo) {
+			toDoList.insertAdjacentHTML('beforeend', li);
+
+			const listItemAll = document.querySelectorAll('.listItem');
+			for (let item of listItemAll) {
+				item.addEventListener('change', isChangList);
+			}
+		}
+		input.value = '';
+	}
+
+
+</script>
+</body>
+</html>

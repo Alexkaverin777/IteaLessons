@@ -1,5 +1,19 @@
 
-    /*
+    /*	if (!form.userName.validity.valid) {
+		form.userName.setCustomValidity('Как тебя зовут дружище?!');
+	}
+	if (!form.email.validity.valid){
+		form.email.setCustomValidity('Ну и зря, не получишь бандероль с яблоками!');
+	}
+	if (!form.pass.validity.valid) {
+		form.pass.setCustomValidity('Я никому не скажу наш секрет');
+	}
+	if (!form.colApple.validity.valid) {
+		form.colApple.setCustomValidity('Ну хоть покушай немного... Яблочки вкусны');
+	}
+	if (!form.thank.value !== 'спасибо') {
+		form.thank.setCustomValidity('Фу, неблагодарный(-ая)!');
+	}
 
         Документация:
         

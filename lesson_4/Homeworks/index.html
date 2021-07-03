@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <p>
+        - Имя пользователя: type:text -> validation: required; minlength = 2;<br>
+    <hr>
+    Если пустое выввести сообщение: "Как тебя зовут дружище?!"<br>
+    <hr>
+    - Email: type: email -> validation: required; minlength = 3; validEmail;<br>
+    <hr>
+    Если эмейл не валидный вывести сообщение "Ну и зря, не получишь бандероль с яблоками!"<br>
+    <hr>
+    - Пароль: type: password -> validation: required; minlength = 8; maxlength=16;<br>
+    <hr>
+    Если пустой вывести сообщение: "Я никому не скажу наш секрет";<br>
+    <hr>
+    - Количество сьеденых яблок: type: number -> validation: required; minlength = 1; validNumber;<br>
+    <hr>
+    Если количество 0 вывести эррор с сообщением "Ну хоть покушай немного... Яблочки вкусные"<br>
+    <hr>
+    - Напиши спасибо за яблоки: type: text -> validation: required;<br>
+    <hr>
+    Если текст !== "спасибо" вывести эррор с сообщением "Фу, неблагодарный(-ая)!" используя setCustomValidity();<br>
+    <hr>
+
+    - Согласен на обучение: type: checkbox -> validation: required;<br>
+    <hr>
+    Если не выбран вывести эррор с сообщение: "Необразованные живут дольше! Хорошо подумай!"<br>
+    <hr>
+
+    Внизу две кнопки:<br>
+    <hr>
+
+    1) Обычный submit который отправит форму, если она валидна.<br>
+    <hr>
+    2) Кнопка Validate(Проверить) которая запускает методы:<br>
+    <hr>
+    - yourForm.checkValidity: и выводит на страницу сообщение с результатом проверки<br>
+    <hr>
+    - yourForm.reportValidity: вызывает проверку всех правил и вывод сообщения с ошибкой, если такая есть<br>
+    <hr>
+
+    </p>
+</head>
+<style>
+    input:valid {
+        border: 3px solid green;
+    }
+
+    .input-valid {
+        border: 3px solid green;
+    }
+
+    .input-invalid:invalid {
+        border: 3px solid red;
+    }
+</style>
+<body>
+<header>
+    <form action="#" id="form">
+        <input type="text" name="userName" required minlength="2" placeholder="UserName">
+        <input type="email" name="email" required minlength="3" placeholder="email">
+        <input type="password" name="pass" required minlength="8" maxlength="16" placeholder="password">
+        <input type="number" name="colApple" required minlength="1" placeholder="соличество яблок">
+        <input type="text" name="thank" required placeholder=" напиши спасибо за яблоки">
+        <label for="learn">
+            <input type="checkbox" id="learn"/>
+            <span>Согласен на обучение</span>
+        </label>
+        <button type="submit" id="btn-submit">отправит форму</button>
+        <button id="check">проверить форму</button>
+
+    </form>
+</header>
+
+<script>
+	const form = document.getElementById('form');
+	const btnSubmit = document.getElementById('btn-submit');
+	const btnCheck = document.getElementById('check');
+	const checkInput = document.getElementById('learn');
+	const allInput = document.querySelectorAll('input');
+
+	allInput.forEach(item => {
+		item.addEventListener('input', () => {
+            item.setCustomValidity('');
+            if (checkInput.checked !== true) {
+				checkInput.setCustomValidity('Необразованные живут дольше! Хорошо подумай!');
+            }else {
+				checkInput.setCustomValidity('');
+            }
+			if (!item.validity.valid) {
+				item.classList.add('input-invalid');
+			} else {
+				item.classList.remove('input-invalid');
+				item.classList.add('input-valid');
+			}
+        })
+    });
+
+	const validForm = () => {
+		form.checkValidity();
+		form.reportValidity();
+		for (let elem of form) {
+			if (elem.nodeName === 'INPUT') {
+				if (!elem.validity.valid) {
+					elem.classList.add('input-invalid');
+				} else {
+					elem.classList.remove('input-invalid');
+					elem.classList.add('input-valid');
+				}
+			}
+		}
+		if (!form.userName.validity.valid) {
+			form.userName.setCustomValidity('Как тебя зовут дружище?!');
+		}
+		if (!form.email.validity.valid) {
+			form.email.setCustomValidity('Ну и зря, не получишь бандероль с яблоками');
+		}
+		if (!form.pass.validity.valid) {
+			form.pass.setCustomValidity('Я никому не скажу наш секрет');
+		}
+		if (!form.colApple.validity.valid) {
+			form.colApple.setCustomValidity('Ну хоть покушай немного... Яблочки вкусные');
+		}
+		if (form.thank.value.toLowerCase() !== 'спасибо') {
+			form.thank.setCustomValidity('Фу, неблагодарный(-ая)');
+		}
+	};
+
+	const submitForm = (e) => {
+		e.preventDefault();
+		validForm();
+		if (checkInput.checked) {
+			form.submit()
+		}
+	};
+
+	btnSubmit.addEventListener('click', submitForm);
+	btnCheck.addEventListener('click', validForm);
+</script>
+</body>
+</html>

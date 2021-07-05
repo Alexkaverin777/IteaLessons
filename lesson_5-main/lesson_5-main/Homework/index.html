@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Task5</title>
+</head>
+<body>
+<header>
+    <div id="CommentsFeed"></div>
+</header>
+<script>
+	const out = document.getElementById('CommentsFeed');
+	const url = 'https://klike.net/uploads/posts/2021-01/1611131129_1.jpg';
+
+	function Comment(name, text, avatarUrl, likes = 0) {
+		this.name = name;
+		this.text = text;
+		this.avatarUrl = avatarUrl;
+		this.likes = likes;
+
+		// this.avatarUrl = url;
+
+		this.enlarge = function () {
+			return this.likes++
+		}
+	}
+
+	const myComment = new Comment('alex', 'hi', url,);
+	const myComment1 = new Comment('lera', 'hi', url,);
+	const myComment2 = new Comment('katya', 'hi', url,);
+	const myComment3 = new Comment('petya', 'hi', url,);
+
+	const CommentsArray = [myComment, myComment1, myComment2, myComment3];
+
+	const outHtml = (arr) => {
+		const result = arr.map((obj, i) => {
+			CommentsFeed.innerHTML += `
+			<p>${obj.name}</p>
+			<p>${obj.text}</p>
+			<p>${obj.avatarUrl}</p>
+			<p>${obj.likes}</p>
+
+            <button class="likes">likes</button>
+			`;
+			return result
+		});
+
+		const btn = document.querySelectorAll('.likes');
+		btn.forEach(item => {
+			item.addEventListener('click', (e) => {
+				let value = e.target.previousSibling.previousSibling;
+				+value.textContent++
+			})
+		});
+
+	};
+	outHtml(CommentsArray)
+</script>
+</body>
+</html>

@@ -30,13 +30,12 @@ function Dog ( name , breed) {
 
 
   this.run = () => {
-
     console.log(this.name + ' run!');
-  }
+  };
 
   this.eat = () => {
     console.log(this.name + ' eat!');
-  }
+  };
 
   this.showAllProps = () => {
     for (let key in this) {

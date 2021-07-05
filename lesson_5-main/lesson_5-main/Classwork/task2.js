@@ -20,11 +20,11 @@
   let colors = {
     background: 'purple',
     color: 'white'
-  }
+  };
 
 function myCall (string) {
   const body = document.body;
-  const h1 = document.createElement('h1')
+  const h1 = document.createElement('h1');
       h1.innerHTML = string;
 
 

@@ -13,7 +13,7 @@
 */
 
 const Train = {
-    neme: 'test',
+    name: 'test',
     speed: 0,
     cntPass: 0,
     drive: function(){
@@ -27,6 +27,6 @@ const Train = {
     pickUpPass: function(x) {
         this.cntPass += x
     }
-}
+};
 
 console.log(Train);

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    /*
+
+    Задание "Шифр цезаря":
+
+    https://uk.wikipedia.org/wiki/%D0%A8%D0%B8%D1%84%D1%80_%D0%A6%D0%B5%D0%B7%D0%B0%D1%80%D1%8F
+
+    Написать функцию, которая будет принимать в себя слово и количество
+    симовлов на которые нужно сделать сдвиг внутри.
+
+    Написать функцию дешефратор которая вернет слово в изначальный вид.
+
+    Сделать статичные функции используя bind и метод частичного
+    вызова функции (каррирования), которая будет создавать и дешефровать
+    слова с статично забитым шагом от одного до 5.
+
+
+    const isMobile = document.innerWidth < 768;
+
+    Например:
+    encryptCesar( 3, 'Word');
+    encryptCesar1(...)
+    ...
+    encryptCesar5(...)
+
+    decryptCesar1(3, 'Sdwq');
+    decryptCesar1(...)
+    ...
+    decryptCesar5(...)
+
+    "а".charCodeAt(); // 1072
+    String.fromCharCode(189, 43, 190, 61) // ½+¾
+
+    */
+</p>
+<script>
+    const encryptCesar = (num, str) => {
+		const arrString = [...str];
+		let result = '';
+        if (arrString) {
+			for (let i = 0; i < arrString.length; i++) {
+                let numm = arrString[i].charCodeAt() + num;
+                result += String.fromCharCode(numm)
+			}
+        }
+        console.log(result);
+        return result
+     };
+    const decryptCesar = (num, str) => {
+    	let result = [...str].map(item => {
+    		let numberLitter = item.charCodeAt() -num;
+            return String.fromCharCode(numberLitter)
+    	});
+
+        console.log(result.join(''));
+        return result.join('')
+    };
+
+	encryptCesar(2,'asd');
+	decryptCesar(2, 'cuf');
+
+	const encryptCesarCarrying = encryptCesar.bind(null, 5);
+	const decryptCesarCarrying = decryptCesar.bind(null, 5);
+
+	encryptCesarCarrying('asd');
+	encryptCesarCarrying('asd');
+	encryptCesarCarrying('asd');
+	encryptCesarCarrying('asd');
+
+	decryptCesarCarrying('fxi');
+	decryptCesarCarrying('fxi');
+	decryptCesarCarrying('fxi');
+	decryptCesarCarrying('fxi');
+
+</script>
+</body>
+</html>

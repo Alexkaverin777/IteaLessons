@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+
+    <div class="result">1</div>
+    <button class="start">start</button>
+    <button class="stop">stop</button>
+    <button class="reset">reset</button>
+    <button class="revers">reverse</button>
+</head>
+<body>
+      <!--
+        Создайте счетчик секунд, который начинает отчет с 1 и заканчивается на 30,
+        также добавьте кнопки который останавливают отчет, и запускают его заново и добавьте кнопку обнуляющую отчет.
+        Также попробуйте изменить код так чтобы отчет начиналься с 30 и заканчивалься на 1.
+
+       + бонус: Сделать так что бы на каждый тик (1с/2c) менялся цвет фона. Можно на основе генератора случайного цвета с предудущих уроков.
+       + бонус: Сделать визуализацию стрелки которая идет по кругу
+            document.getElementById("myDIV").style.transform = "rotate(7deg)";
+
+       + бонус: Сделать кнопки которые выбирают режим в котором идет отсчет - обычный от 0 до 30 или реверсивный от 30 до 0
+      -->
+      <script>
+        const btnStart = document.querySelector('.start');
+        const btnStop = document.querySelector('.stop');
+        const btnReset = document.querySelector('.reset');
+        const btnRevers = document.querySelector('.revers');
+        const result = document.querySelector('.result'); 
+
+        let timer = null;
+
+        let count = 1;
+
+        const timerStart = ()=>{
+          clearInterval(timer)
+          console.log('timerStart',count);
+          timer = setInterval (() => {
+            count++
+            if(count <= 30) {
+              renderCount(count)
+            }  
+          }, 1000)
+        };
+
+        const timerReset = () => {
+          timerStop()
+          count = 1;
+          renderCount(count)
+        }
+
+        const timerRevers = () => {
+          clearInterval(timer);
+          
+          timer = setInterval (() => {
+            if(count > 0) {
+              count--
+              renderCount(count)  
+            }else {
+            clearInterval(timer);
+          }
+          
+            
+          }, 1000)
+        }
+
+        const timerStop = () => clearInterval(timer);
+
+        const renderCount = value => result.innerHTML = value;
+
+        btnStart.addEventListener('click', timerStart);
+        btnReset.addEventListener('click',  timerReset);
+        btnStop.addEventListener('click', timerStop);
+        btnRevers.addEventListener('click', timerRevers);
+
+
+
+
+      </script>
+</body>
+</html>

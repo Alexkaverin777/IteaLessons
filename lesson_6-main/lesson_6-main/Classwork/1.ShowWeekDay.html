@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Classwork</title>
+</head>
+
+<body>
+    <header>
+        <input id="MyDateSelector" type="date" />
+        <button id="ShowDayButton">Показать день недели</button>
+    </header>
+    <div id="result"></div>
+    <script>
+        const input = document.getElementById('MyDateSelector');
+        const btn = document.getElementById('ShowDayButton');
+        const result = document.getElementById('result');
+
+        const day = ['Воскресенье', 'Понедельние', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+
+        const getWeekDay = (date) => day[date.getDay()];
+
+        btn.addEventListener('click', () => {
+            if (input.value) {
+                const [year, month, day] = input.value.split('-');
+
+                const date = new Date(year, (month - 1), day);
+
+                result.innerText = getWeekDay(date)
+            }
+        })
+        /*
+          Создайте функцию, которая по клику на "показать день недели" возвращает день недели для выбранной даты с интута.
+          День нужно возвратить в div#result в текстовом формате т.е понедельник, вторник, суббота и т.д
+        */
+
+    </script>
+</body>
+
+</html>

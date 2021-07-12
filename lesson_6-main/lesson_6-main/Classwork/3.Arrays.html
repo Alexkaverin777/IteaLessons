@@ -1,61 +1,199 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Classwork</title>
-
-    <script>
-
-    /*
-      Задание:
-      1. При помощи методов изложеных ниже, переформатировать ITEA_COURSES в массив который содержит длину строк каждого из элементов.
-      2. Отфильтровать массив ITEA_COURSES по алфавиту.
-          + Бонусный бал. Вывести на страничку списком
-      3. Реализация функции поиска по массиву ITEA_COURSES.
-          + Бонусный бал. Вывести на страничку инпут и кнопку по которой будет срабатывать поиск.
-    */
-
-    const ITEA_COURSES = ["Курс HTML & CSS", "JavaScript базовый курс", "JavaScript продвинутый курс", "JavaScript Professional", "Angular 2.4 (базовый)", "Angular 2.4 (продвинутый)", "React.js", "React Native", "Node.js", "Vue.js"];
-
-    /*
-      Задание 2:
-      Написать фильтр массива по:
-      Актеру, продолжительности
-
-      Бонус:
-        Сделать графическую оболочку для программы:
-        - Селект со списком актеров
-        - Селект или инпут с продолжительностью
-        - Результат в виде списка фильмов
-    */
-
-      var stars = ['Elijah Wood', 'Ian McKellen', 'Orlando Bloom','Ewan McGregor',' Liam Neeson', 'Natalie Portman', 'Ewan McGregor', 'Billy Bob Thornton', 'Martin Freeman']
-      var movies = [
-            {
-              name: "Lord of the Rigs",
-              duration: 240,
-              starring: [ 'Elijah Wood', 'Ian McKellen', 'Orlando Bloom']
-            },
-            {
-              name: "Star Wars: Episode I - The Phantom Menace",
-              duration: 136,
-              starring: [ 'Ewan McGregor',' Liam Neeson', 'Natalie Portman']
-            },
-            {
-              name: "Fargo",
-              duration: 100,
-              starring: [ 'Ewan McGregor', 'Billy Bob Thornton', 'Martin Freeman']
-            },
-            {
-            name: "V for Vendetta",
-            duration: 150,
-            starring: [ 'Hugo Weaving', 'Natalie Portman', 'Rupert Graves']
-          }
-        ];
-
-    </script>
+  <meta charset="UTF-8">
+  <title>Classwork</title>
 </head>
+
+<style>
+  .wrapper-select {
+    margin-top: 50px;
+  }
+</style>
+
 <body>
-  
+  <div class="result"></div>
+  <div class="wrapper-search"></div>
+
+  <div class="wrapper-select">
+    <select name="actor" id="actor"></select>
+
+    <label for="duration">Продолжительность: max 240min</label>
+    <input id="duration" type="number" class="duration">
+    <button id="searchFilm" class="searchFilm">search Film</button>
+    <div id="result"></div>
+  </div>
+
+
+
 </body>
+<script>
+
+
+  /*
+    Задание:
+    1. При помощи методов изложеных ниже, переформатировать ITEA_COURSES в массив который содержит длину строк каждого из элементов.
+    2. Отфильтровать массив ITEA_COURSES по алфавиту.
+        + Бонусный бал. Вывести на страничку списком
+    3. Реализация функции поиска по массиву ITEA_COURSES.
+        + Бонусный бал. Вывести на страничку инпут и кнопку по которой будет срабатывать поиск.
+  */
+  ///>(.*?)</g
+  const $result = document.querySelector('.result');
+  const $wrapperSearch = document.querySelector('.wrapper-search');
+  const createListArr = document.createElement('ul');
+
+  const createBittonSearch = document.createElement('button');
+  const createInputSearch = document.createElement('input');
+  const createParagrafSearch = document.createElement('p');
+
+  createInputSearch.classList.add('input-search');
+  createBittonSearch.classList.add('btn-search');
+
+  createBittonSearch.innerText = 'Найти';
+
+  $wrapperSearch.appendChild(createInputSearch);
+  $wrapperSearch.appendChild(createBittonSearch);
+
+
+  const $inputSearch = document.querySelector('.input-search');
+  const $btnSearch = document.querySelector('.btn-search');
+
+  const ITEA_COURSES = ["Курс HTML & CSS", "JavaScript базовый курс", "JavaScript продвинутый курс", "JavaScript Professional", "Angular 2.4 (базовый)", "Angular 2.4 (продвинутый)", "React.js", "React Native", "Node.js", "Vue.js"];
+
+  const newArrLenghtCourse = (arr) => arr.map(item => item.length)
+  // console.log(newArrLenghtCourse(ITEA_COURSES));
+  const arrSort = ITEA_COURSES.sort()
+
+  for (let item of arrSort) {
+    createListArr.innerHTML += `<li>${item}</li>`;
+  }
+
+  $result.appendChild(createListArr)
+
+  $btnSearch.addEventListener('click', () => {
+    const value = $inputSearch.value.toLowerCase();
+    const foundWord = [];
+    if (value) {
+      for (let item of ITEA_COURSES) {
+        const str = item.toLowerCase();
+        if (!str.indexOf(value)) {
+          foundWord.push(str);
+          $inputSearch.value = '';
+
+          createParagrafSearch.innerHTML = `${foundWord[0]}`;
+          console.log(createParagrafSearch);
+          $wrapperSearch.appendChild(createParagrafSearch);
+
+          return true
+        }
+      }
+    }
+    if (foundWord.length === 0) {
+      alert(`По запросу "${value}" ничего не найдено!!!`);
+      $inputSearch.value = '';
+      return false
+    }
+
+
+  })
+  /*
+    Задание 2:
+    Написать фильтр массива по:
+    Актеру, продолжительности
+
+    Бонус:
+      Сделать графическую оболочку для программы:
+      - Селект со списком актеров
+      - Селект или инпут с продолжительностью
+      - Результат в виде списка фильмов
+  */
+
+
+
+
+  var stars = ['Elijah Wood', 'Ian McKellen', 'Orlando Bloom', 'Ewan McGregor', ' Liam Neeson', 'Natalie Portman', 'Ewan McGregor', 'Billy Bob Thornton', 'Martin Freeman'];
+
+
+  var movies = [
+    {
+      name: "Lord of the Rigs",
+      duration: 240,
+      starring: ['Elijah Wood', 'Ian McKellen', 'Orlando Bloom']
+    },
+    {
+      name: "Star Wars: Episode I - The Phantom Menace",
+      duration: 136,
+      starring: ['Ewan McGregor', ' Liam Neeson', 'Natalie Portman']
+    },
+    {
+      name: "Fargo",
+      duration: 100,
+      starring: ['Ewan McGregor', 'Billy Bob Thornton', 'Martin Freeman']
+    },
+    {
+      name: "V for Vendetta",
+      duration: 150,
+      starring: ['Hugo Weaving', 'Natalie Portman', 'Rupert Graves']
+    }
+  ];
+
+  const searchFilm = document.getElementById('searchFilm');
+
+  const selectActor = document.getElementById('actor');
+
+  let options = new Option('Выбрать', "-", false, false)
+  selectActor.appendChild(options);
+
+  for (let item of stars) {
+    options = new Option(item, item, false, false);
+    selectActor.appendChild(options)
+  }
+
+  searchFilm.addEventListener('click', () => {
+    const selectValue = document.getElementById('actor').value;
+    const inputValue = parseInt(document.getElementById('duration').value);
+    const result = document.getElementById('result');
+
+    let value = 0;
+    if (inputValue) {
+      inputValue <= 100 ? value = 100 : (inputValue > 100 && inputValue <= 136) ? value = 136 : (inputValue > 136 && inputValue <= 150) ? value = 150 : value = 240
+    }
+    result.innerHTML = '';
+
+    movies.filter((item, index) => {
+
+      for (let i = 0; i < item.starring.length; i++) {
+        if (item.starring[i] === selectValue) {
+          const html = `
+              <h3>Фильм ${item.name}</h3>
+              <p>Продолжительность ${item.duration} мин</p>
+              <h4>Актер ${selectValue}</h4>
+              <hr>            
+              `;
+          result.insertAdjacentHTML('beforebegin', html);
+        }
+
+        if (item.duration == value) {
+          const html = `
+              <h3>Фильм ${item.name}</h3>
+              <p>Продолжительность ${item.duration} мин</p>
+              <h4>Актер ${selectValue}</h4>
+              <hr>            
+              `;
+          result.insertAdjacentHTML('beforebegin', html);
+        }
+      }
+
+    })
+  })
+
+</script>
+</head>
+
+<body>
+
+</body>
+
 </html>

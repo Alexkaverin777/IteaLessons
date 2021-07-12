@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Classwork</title>
 
-    <script>
+<head>
+  <meta charset="UTF-8">
+  <title>Classwork</title>
+
+  <script>
     /*
       Задание:
         1. Используя интерфейс который есть на страничке, написать визуальный
@@ -21,84 +22,154 @@
         * Изменять HTML можно.
 
     */
-    </script>
+  </script>
 </head>
+
 <body>
   <div class="wrap">
-      <div class="assigned">
-        <form class="ObjForm">
-            <input name="key" placeholder="Enter your key"/>
-            <input name="value" placeholder="Enter your value"/>
-            <button type="submit">Send</button>
-        </form>
-        <div class="createResult">
-          <header>
-            Created Object
-          </header>
-          <div class="createdObj">
-            <code>
-              {
-                id:123,
-                b:'test',
-                demo:'test2'
-              }
-            </code>
-          </div>
+    <div class="assigned">
+      <form class="ObjForm">
+        <input name="key" id="key" placeholder="Enter your key" />
+        <input name="value" id="value" placeholder="Enter your value" />
+        <button type="submit" id="submit">Send</button>
+      </form>
+      <div class="createResult">
+        <header>
+          Created Object
+        </header>
+        {
+        <div class="createdObj-left">
         </div>
-      </div>
-
-      <div class="assigned">
-        <form class="ObjForm">
-            <input name="key" placeholder="Enter your key"/>
-            <input name="value" placeholder="Enter your value"/>
-            <button type="submit">Send</button>
-          </form>
-          <div class="createResult">
-            <header>
-              Created Object
-            </header>
-            <div class="createdObj">
-              <code>
-                {
-                  id:123,
-                  b:'test',
-                  demo:'test2'
-                }
-              </code>
-            </div>
-          </div>
+        }
       </div>
     </div>
-    <div class="resultBlock">
-       <button>Combine Objects!</button>
-      <h3> Result: </h3>
-      <div id="result"></div>
+
+    <div class="assigned">
+      <form class="ObjForm">
+        <input name="key" id="key2" placeholder="Enter your key" />
+        <input name="value" id="value2" placeholder="Enter your value" />
+        <button type="submit" id="submit2">Send</button>
+      </form>
+      <div class="createResult">
+        <header>
+          Created Object
+        </header>
+        {
+        <div class="createdObj-right">
+        </div>
+        }
+      </div>
     </div>
+  </div>
+  <div class="resultBlock">
+    <button id="combine">Objects!</button>
+    <h3> Result: </h3>
+    {
+    <div id="result"></div>
+    }
+  </div>
 
-      <script>
+  <script>
 
-      </script>
-      <style>
-        .wrap{
-          width: 800px;
-          display: flex;
-        }
-        .ObjForm,
-        .resultBlock{
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          box-sizing: border-box;
-          padding: 10px 20px;
-        }
+    const sendBtn = document.getElementById('submit');
+    const sendBtn2 = document.getElementById('submit2');
+    const combineBtn = document.getElementById('combine');
+    const result = document.getElementById('result');
 
-        .assigned{
-          width: 300px;
-          display: flex;
-        }
-        .createResult header{
-          font-weight: 700;
-        }
-      </style>
+    const createdObjL = document.querySelector('.createdObj-left');
+    const createdObjR = document.querySelector('.createdObj-right');
+
+    const key = document.getElementById('key');
+    const valueV = document.getElementById('value');
+
+    const key2 = document.getElementById('key2');
+    const valueV2 = document.getElementById('value2');
+
+    let objLeft = {};
+    let objRight = {};
+
+
+
+    const sendBtnFun = (e) => {
+      e.preventDefault();
+      console.log(objLeft);
+      const keyV = key.value;
+      const value = valueV.value;
+
+      let codeHtml = document.createElement('code');
+
+      codeHtml.innerHTML = `
+        ${keyV}:${value},
+          `;
+      createdObjL.append(codeHtml);
+
+      objLeft[`${keyV}`] = value;
+
+
+
+    }
+
+    const sendBtnFun2 = e => {
+      e.preventDefault();
+      console.log(objLeft);
+      const keyV = key2.value;
+      const value = valueV2.value;
+
+      let codeHtml = document.createElement('code');
+
+      codeHtml.innerHTML = `
+          ${keyV}:${value},
+          `;
+      createdObjR.append(codeHtml);
+      objRight[`${keyV}`] = value;
+      console.log(objRight);
+    }
+
+    const combineBtnFun = e => {
+      e.preventDefault();
+
+      const obj = { ...objLeft, ...objRight }
+      for (let key in obj) {
+        let codeHtml = document.createElement('code');
+        codeHtml.innerHTML = `
+              ${key}:${obj[key]}<br>
+            `;
+
+        result.appendChild(codeHtml)
+      }
+
+
+
+    }
+
+    sendBtn2.addEventListener('click', sendBtnFun2)
+    sendBtn.addEventListener('click', sendBtnFun);
+    combineBtn.addEventListener('click', combineBtnFun)
+  </script>
+  <style>
+    .wrap {
+      width: 800px;
+      display: flex;
+    }
+
+    .ObjForm,
+    .resultBlock {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      box-sizing: border-box;
+      padding: 10px 20px;
+    }
+
+    .assigned {
+      width: 300px;
+      display: flex;
+    }
+
+    .createResult header {
+      font-weight: 700;
+    }
+  </style>
 </body>
+
 </html>

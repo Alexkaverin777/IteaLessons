@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async-await</title>
+
+
+
+  <style>
+
+    .warapper-list {
+      display: flex;
+      width: 800px;
+
+      padding: 0;
+    }
+    li {
+      display: block;
+      border-right: 1px solid #000;
+      text-align: center;
+      width: 160px;
+    }
+    .number {
+      width: 50px;
+    }
+    .delete {
+      width: 90%;
+      margin: 0 auto;
+    }
+    .data {
+      display: none;
+    }
+    .show {
+      display: block;
+    }
+    .registation.active .data{
+      display: block;
+    }
+    .registation.active button{
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="box-list">
+
+  </div>
+
+
+  <script>
+    /*
+
+        <ul class="warapper-list">
+      <li class="number"></li>
+      <li class="company-name"></li>
+      <li class="balance"></li>
+      <li class="registation"></li>
+      <li class="wrapper-delite"> <button class="delete">❌</button></li>
+    </ul>
+
+  Задание:
+
+    Написать при помощи async-await скрипт, который:
+
+    Получает список компаний:  http://www.json-generator.com/api/json/get/ceRHciXcVu?indent=2
+    Перебирает, выводит табличку:
+
+    # | Company  | Balance | Показать дату регистрации | Показать адресс |
+    1.| CompName | 2000$   | button                    | button
+    2.| CompName | 2000$   | 20/10/2019                | button
+    3.| CompName | 2000$   | button                    | button
+    4.| CompName | 2000$   | button                    | button
+
+    Данные о дате регистрации и адресс скрывать при выводе и показывать при клике.
+
+*/
+const boxList = document.querySelector('.box-list');
+
+const getDataCompany = async () => {
+  const companyList = await fetch('http://www.json-generator.com/api/json/get/ceRHciXcVu?indent=2');
+
+  return await companyList.json()
+};
+
+const companyList = getDataCompany()
+companyList
+.then(company => {
+
+  const creatList = company.map((item, i,) => {
+    const list = document.createElement('ul');
+          list.classList.add('warapper-list')
+
+    list.innerHTML = `
+      <li class="number">${i+1}</li>
+      <li class="company-name">${item.company}</li>
+      <li class="balance">${item.balance}</li>
+      <li class="registation"><span class="data">${item.registered}</span> <button class="chowbtn">Show</button></li>
+      <li class="wrapper-delite"><button class="delete">❌</button></li>
+    `;
+    boxList.insertAdjacentElement('beforeend', list )
+    return list
+  })
+})
+
+const updataList = e => {
+  const target = e.target
+
+  const ul = target.closest('.warapper-list');
+  const registratiot = target.closest('.registation');
+
+  const btnDelite = target.classList.contains('delete');
+  const btnShow = target.classList.contains('chowbtn');
+
+ if (btnDelite) ul.remove()
+
+ if (btnShow) registratiot.classList.add('active');
+
+}
+
+
+boxList.addEventListener('click', updataList)
+</script>
+</body>
+</html>

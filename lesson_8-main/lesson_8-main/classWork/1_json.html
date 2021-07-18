@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form id="form">
+    <input name="name" />
+    <input name="age"/>
+    <input name="password"/>
+    <button name="btn">получить данные</button>
+  </form>
+
+  <form class="pasrDataForm">
+    <input type="text" name="name"/>
+    <button class="pasrData">преоброзовать данные</button>
+  </form>
+
+  <script>
+    /*
+  Задание:
+  Написать скрипт который:
+    1. Собирает данные с формы (3 разных полей), конвертирует их в json и выводит в консоль.
+  ->  2. Сделать отдельный инпут который выполняет JSON.parse(); на ту строку что вы туда ввели и выводит результат в консоль.
+
+  Array.from(HTMLNodeColection); -> Arary
+        value.name = item.name.
+        value.age = item.value
+        value.pass = item.value
+
+  -> '{"name" : !"23123", "age": 15, "password": "*****" }'
+
+*/
+
+
+const form = document.querySelector('form');
+const pasrDataForm = document.querySelector('.pasrDataForm');
+
+const dataCollection = (e) => {
+  e.preventDefault()
+  let value = {
+    name: form.name.value,
+    age: form.age.value,
+    pass: form.password.value
+  }
+
+  console.log(JSON.stringify(value));
+}
+
+
+
+form.btn.addEventListener('click',dataCollection);
+pasrDataForm.addEventListener('submit', (e) =>{
+  e.preventDefault()
+  const value = pasrDataForm.name.value;
+
+  console.log(JSON.parse(value));
+});
+  </script>
+</body>
+</html>
+
+
